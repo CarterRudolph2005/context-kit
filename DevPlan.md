@@ -709,27 +709,27 @@ The order follows the owner's request: **kit files → scripts that turn UI answ
 
 ### Phase 0 — Foundations & Contracts (Always Sequential, Lead Agent)
 
-- [ ] `cd context-kit && npm install --save-dev @types/node`. Add `"node"` to `types` in `tsconfig.spec.json`.
-- [ ] Add `scripts/build-templates.mjs` (§4.4), plus the `prestart`, `prebuild` and `pretest` npm scripts. Add `/src/app/kit/templates.generated.ts` to `context-kit/.gitignore`. Create an empty `kit-templates/` folder containing `.gitkeep`.
-- [ ] Write the contract files in full, with tests:
-  - [ ] `kit-file.ts`
-  - [ ] `placeholders.ts` (every key in §4.2)
-  - [ ] `kit-answers.ts`: types for every field in §4.1, `DEFAULT_ANSWERS`, `normalizeAnswers`, `slugify`, and `isComplete` (true when all required fields are valid)
-  - [ ] Tests for `slugify`: `""` → `my-project`; `"My App!!"` → `my-app`; emoji only → `my-project`; a 100-character name → 40 characters with no trailing `-`
-  - [ ] Tests for normalizing: newline collapsing and every fallback
-- [ ] Write the contract test `src/app/kit/templates-contract.spec.ts`. It checks two things, and passes on an empty map:
+- [x] `cd context-kit && npm install --save-dev @types/node`. Add `"node"` to `types` in `tsconfig.spec.json`.
+- [x] Add `scripts/build-templates.mjs` (§4.4), plus the `prestart`, `prebuild` and `pretest` npm scripts. Add `/src/app/kit/templates.generated.ts` to `context-kit/.gitignore`. Create an empty `kit-templates/` folder containing `.gitkeep`.
+- [x] Write the contract files in full, with tests:
+  - [x] `kit-file.ts`
+  - [x] `placeholders.ts` (every key in §4.2)
+  - [x] `kit-answers.ts`: types for every field in §4.1, `DEFAULT_ANSWERS`, `normalizeAnswers`, `slugify`, and `isComplete` (true when all required fields are valid)
+  - [x] Tests for `slugify`: `""` → `my-project`; `"My App!!"` → `my-app`; emoji only → `my-project`; a 100-character name → 40 characters with no trailing `-`
+  - [x] Tests for normalizing: newline collapsing and every fallback
+- [x] Write the contract test `src/app/kit/templates-contract.spec.ts`. It checks two things, and passes on an empty map:
   - every `{{key}}` in any `TEMPLATES` value is in `PLACEHOLDER_KEYS`
   - no `TEMPLATES` key ends in `/AGENTS.md` or `/CLAUDE.md`
-- [ ] Add stubs with their final signatures:
+- [x] Add stubs with their final signatures:
   - `TemplateCompiler.compile(answers, templates = TEMPLATES): KitFile[]`, returning `[]`
   - `ZipGenerator.buildZip`, returning an empty zip Blob
   - `ZipGenerator.download`, a no-op
-- [ ] Replace `app.html` with a `<main>` holding the header from §4.3. Update `app.spec.ts` to check for the "Context Kit" heading.
-- [ ] Add `context-kit/README.md`:
+- [x] Replace `app.html` with a `<main>` holding the header from §4.3. Update `app.spec.ts` to check for the "Context Kit" heading.
+- [x] Add `context-kit/README.md`:
   - what the app is
   - `npm start`, `npm test -- --watch=false` and `npm run build`
   - that kit content lives in `kit-templates/`
-- [ ] Verify the build is green. Make the first commit: `Phase 0: foundations and contracts`.
+- [x] Verify the build is green. Make the first commit: `Phase 0: foundations and contracts`.
 
 ### Phase 1 — Kit Templates (Stream A)
 
@@ -907,4 +907,5 @@ Run Phase 0 → 1 → 2 → 3 → 4 in order on `main`. Skip the merge step in P
 
 ## 10. Implementation Notes (Agent Appends Here)
 
-- (none yet)
+- Phase 0: Sequential mode selected.
+- Phase 0: `KitAnswers.today` is an optional fixture override; normal browser generation still uses the local date.

@@ -38,6 +38,7 @@ yarn-error.log
 testem.log
 /typings
 __screenshots__/
+/src/app/kit/templates.generated.ts
 
 # System files
 .DS_Store
