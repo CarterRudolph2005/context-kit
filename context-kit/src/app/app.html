@@ -1,10 +1,50 @@
 <main>
-  <header>
+  <header class="site-header">
     <h1>Context Kit</h1>
-    <p>
+    <p class="tagline">
       Give your AI a memory — and a name. Answer a few questions, download a folder, and your AI
       remembers your project every time you come back.
     </p>
-    <small>Everything happens in your browser. Your answers are never sent anywhere.</small>
+    <p class="trust-line">Everything happens in your browser. Your answers are never sent anywhere.</p>
   </header>
+
+  <app-survey
+    (answersChange)="updateAnswers($event)"
+    (validChange)="valid.set($event)"
+  />
+
+  <section class="page-section" aria-labelledby="preview-heading">
+    <p class="eyebrow">Preview</p>
+    <h2 id="preview-heading">{{ previewHeading() }}</h2>
+    @if (!valid()) {
+      <div class="notice" role="status">
+        <p><strong>Answer the required questions to preview your kit.</strong></p>
+        <p>Still needed:</p>
+        <ul>
+          @for (field of missingFields(); track field) {
+            <li>{{ field }}</li>
+          }
+        </ul>
+      </div>
+    } @else if (files().length) {
+      <app-kit-preview [files]="files()" />
+    } @else {
+      <p class="notice">Your answers are complete. Kit files will appear here when generation finishes.</p>
+    }
+  </section>
+
+  <section class="page-section download-section" aria-labelledby="download-heading">
+    <p class="eyebrow">Download</p>
+    <h2 id="download-heading">{{ readyMessage() }}</h2>
+    <button class="primary-button" type="button" [disabled]="!valid() || downloading()" (click)="download()">
+      {{ downloading() ? 'Building your kit…' : 'Download my kit (.zip)' }}
+    </button>
+
+    <h3>What next</h3>
+    <ol>
+      <li>Unzip the downloaded folder.</li>
+      <li>Open <code>START-HERE.md</code>.</li>
+      <li>Start your AI and say hi.</li>
+    </ol>
+  </section>
 </main>

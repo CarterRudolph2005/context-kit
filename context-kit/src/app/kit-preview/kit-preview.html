@@ -1,0 +1,27 @@
+<div class="preview-layout">
+  <nav class="file-tree" aria-label="Kit files">
+    @for (group of groups(); track group.folder) {
+      <section class="file-group">
+        <h3>{{ group.folder }}</h3>
+        <ul>
+          @for (file of group.files; track file.path) {
+            <li>
+              <button
+                type="button"
+                [class.selected]="selectedFile()?.path === file.path"
+                [attr.aria-pressed]="selectedFile()?.path === file.path"
+                (click)="selectedPath.set(file.path)"
+              >{{ file.path.split('/').at(-1) }}</button>
+            </li>
+          }
+        </ul>
+      </section>
+    }
+  </nav>
+  @if (selectedFile(); as file) {
+    <section class="file-content" aria-live="polite">
+      <h3>{{ file.path }}</h3>
+      <pre tabindex="0">{{ file.content }}</pre>
+    </section>
+  }
+</div>

@@ -1,1 +1,113 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: light dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #1e293b;
+  background: #f6f7fb;
+  font-synthesis: none;
+  --page: #f6f7fb;
+  --surface: #ffffff;
+  --surface-soft: #f0f4ff;
+  --text: #1e293b;
+  --muted: #64748b;
+  --line: #d8deea;
+  --accent: #5b4fd6;
+  --accent-strong: #4538bf;
+  --accent-soft: #e8e7ff;
+  --danger: #b42318;
+  --shadow: 0 16px 45px rgb(30 41 59 / 8%);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  color: var(--text);
+  background: radial-gradient(circle at 15% 0%, rgb(91 79 214 / 12%), transparent 28rem), var(--page);
+}
+
+button, input, textarea { font: inherit; }
+
+main {
+  width: min(100% - 2rem, 720px);
+  margin-inline: auto;
+  padding: 4rem 0 6rem;
+}
+
+.site-header { padding: 0.5rem 0 2.2rem; }
+h1, h2, h3, p { margin-top: 0; }
+h1 { margin-bottom: 0.75rem; font-size: clamp(2.5rem, 10vw, 4.5rem); line-height: 0.95; letter-spacing: -0.055em; }
+h2 { margin-bottom: 1.5rem; font-size: clamp(1.45rem, 5vw, 2rem); letter-spacing: -0.025em; }
+h3 { font-size: 1rem; }
+
+.tagline { max-width: 42rem; margin-bottom: 0.8rem; color: var(--muted); font-size: 1.12rem; line-height: 1.65; }
+.trust-line { display: inline-flex; margin: 0; padding: 0.45rem 0.7rem; border-radius: 999px; color: var(--accent-strong); background: var(--accent-soft); font-size: 0.8rem; font-weight: 650; }
+.page-section { margin: 1rem 0; padding: clamp(1.25rem, 5vw, 2rem); border: 1px solid var(--line); border-radius: 1.25rem; background: var(--surface); box-shadow: var(--shadow); }
+.eyebrow { margin-bottom: 0.55rem; color: var(--accent-strong); font-size: 0.73rem; font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; }
+.question { margin: 0; padding: 1.3rem 0; border: 0; border-top: 1px solid var(--line); }
+.question:first-of-type { border-top: 0; }
+.question > label, legend { padding: 0; font-weight: 720; line-height: 1.4; }
+.helper { margin: 0.25rem 0 0.75rem; color: var(--muted); font-size: 0.88rem; line-height: 1.45; }
+
+input[type="text"], input[type="date"], textarea { width: 100%; padding: 0.75rem 0.85rem; border: 1px solid var(--line); border-radius: 0.65rem; color: var(--text); background: var(--surface); }
+textarea { resize: vertical; }
+input[type="radio"], input[type="checkbox"] { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--accent); }
+input:focus-visible, textarea:focus-visible, button:focus-visible { outline: 3px solid color-mix(in srgb, var(--accent) 48%, transparent); outline-offset: 2px; }
+
+.choice-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.8rem; }
+.choice-card { display: flex; gap: 0.75rem; align-items: flex-start; min-height: 7rem; padding: 1rem; border: 1px solid var(--line); border-radius: 0.8rem; cursor: pointer; }
+.choice-card:has(input:checked) { border-color: var(--accent); background: var(--surface-soft); box-shadow: inset 0 0 0 1px var(--accent); }
+.choice-card strong, .choice-card small, .requirement-row span, .requirement-row small { display: block; }
+.choice-card small, .requirement-row small { margin-top: 0.35rem; color: var(--muted); line-height: 1.4; }
+.option-list { display: grid; gap: 0.6rem; }
+.option-list label, .requirement-row label { display: flex; gap: 0.55rem; align-items: center; min-height: 2rem; cursor: pointer; }
+.compact-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.error { margin: 0.55rem 0 0; color: var(--danger); font-size: 0.84rem; font-weight: 650; }
+
+.requirement-row { display: grid; grid-template-columns: minmax(12rem, 1fr) repeat(3, auto); gap: 0.55rem 1rem; align-items: center; padding: 1rem 0; border-top: 1px solid var(--line); }
+.notice { margin-bottom: 0; padding: 1rem; border-left: 4px solid var(--accent); border-radius: 0.5rem; background: var(--surface-soft); line-height: 1.5; }
+.notice p:last-of-type, .notice ul:last-child { margin-bottom: 0; }
+
+.preview-layout { display: grid; grid-template-columns: 13rem minmax(0, 1fr); overflow: hidden; border: 1px solid var(--line); border-radius: 0.8rem; }
+.file-tree { max-height: 33rem; overflow: auto; padding: 0.75rem; border-right: 1px solid var(--line); background: var(--surface-soft); }
+.file-group h3 { margin: 0.6rem 0 0.3rem; color: var(--muted); font-size: 0.7rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.file-group ul { margin: 0; padding: 0; list-style: none; }
+.file-group button { width: 100%; padding: 0.45rem 0.55rem; overflow: hidden; border: 0; border-radius: 0.4rem; color: var(--text); background: transparent; text-align: left; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
+.file-group button:hover, .file-group button.selected { color: var(--accent-strong); background: var(--accent-soft); }
+.file-content { min-width: 0; }
+.file-content h3 { margin: 0; padding: 0.8rem 1rem; border-bottom: 1px solid var(--line); }
+.file-content pre { height: 29rem; margin: 0; overflow: auto; padding: 1rem; color: var(--text); background: var(--surface); font: 0.78rem/1.55 ui-monospace, SFMono-Regular, Consolas, monospace; white-space: pre-wrap; }
+
+.primary-button { width: 100%; padding: 0.9rem 1rem; border: 0; border-radius: 0.7rem; color: #ffffff; background: var(--accent); font-weight: 750; cursor: pointer; }
+.primary-button:hover:not(:disabled) { background: var(--accent-strong); }
+.primary-button:disabled { cursor: not-allowed; opacity: 0.48; }
+.download-section h3 { margin-top: 1.8rem; }
+.download-section li { margin: 0.55rem 0; }
+code { padding: 0.1rem 0.3rem; border-radius: 0.25rem; background: var(--surface-soft); }
+
+@media (max-width: 600px) {
+  main { width: min(100% - 1rem, 720px); padding-top: 2rem; }
+  .choice-cards, .compact-options, .preview-layout { grid-template-columns: 1fr; }
+  .choice-card { min-height: auto; }
+  .requirement-row { grid-template-columns: repeat(3, 1fr); }
+  .requirement-row > span { grid-column: 1 / -1; }
+  .file-tree { max-height: 14rem; border-right: 0; border-bottom: 1px solid var(--line); }
+  .file-content pre { height: 24rem; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0d1220;
+    --surface: #151c2e;
+    --surface-soft: #202844;
+    --text: #edf1fa;
+    --muted: #aab5ca;
+    --line: #35405a;
+    --accent: #9388ff;
+    --accent-strong: #b0a8ff;
+    --accent-soft: #292655;
+    --danger: #ffaaa2;
+    --shadow: 0 16px 45px rgb(0 0 0 / 20%);
+  }
+}
