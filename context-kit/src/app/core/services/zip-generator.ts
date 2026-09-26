@@ -1,13 +1,23 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { saveAs } from 'file-saver';
 import JSZip from 'jszip';
-import { KitAnswers } from '../../kit/kit-answers';
+import { KitAnswers, normalizeAnswers } from '../../kit/kit-answers';
 import { KitFile } from '../../kit/kit-file';
+import { TemplateCompiler } from './template-compiler';
 
 @Injectable({ providedIn: 'root' })
 export class ZipGenerator {
-  buildZip(_files: KitFile[], _slug: string): Promise<Blob> {
-    return new JSZip().generateAsync({ type: 'blob' });
+  private readonly compiler = inject(TemplateCompiler);
+
+  buildZip(files: KitFile[], slug: string): Promise<Blob> {
+    const zip = new JSZip();
+    for (const file of files) zip.file(`${slug}/${file.path}`, file.content);
+    return zip.generateAsync({ type: 'blob' });
   }
 
-  async download(_answers: KitAnswers): Promise<void> {}
+  async download(answers: KitAnswers): Promise<void> {
+    const normalized = normalizeAnswers(answers);
+    const blob = await this.buildZip(this.compiler.compile(answers), normalized.projectSlug);
+    saveAs(blob, `${normalized.projectSlug}-context-kit.zip`);
+  }
 }
