@@ -1,0 +1,260 @@
+<form [formGroup]="form" novalidate>
+  <section class="page-section" aria-labelledby="track-heading">
+    <p class="eyebrow">1 · What are you working on?</p>
+    <h2 id="track-heading">Choose a kit</h2>
+    <p class="helper" id="track-help">Pick one. You can make another kit later.</p>
+    <div class="choice-cards" role="radiogroup" aria-describedby="track-help">
+      <label class="choice-card">
+        <input type="radio" formControlName="track" value="research" />
+        <span><strong>Research</strong><small>Collect sources and build a knowledge base</small></span>
+      </label>
+      <label class="choice-card">
+        <input type="radio" formControlName="track" value="app" />
+        <span><strong>Build an app</strong><small>Make software with an AI partner</small></span>
+      </label>
+    </div>
+  </section>
+
+  <section class="page-section" aria-labelledby="people-heading">
+    <p class="eyebrow">2 · You &amp; your AI</p>
+    <h2 id="people-heading">Make it personal</h2>
+
+    <div class="question">
+      <label for="user-name">What should your AI call you?</label>
+      <p class="helper" id="user-name-help">Your first name or a nickname.</p>
+      <input id="user-name" type="text" formControlName="userName" maxlength="40" aria-describedby="user-name-help" />
+      @if (form.controls.userName.touched && form.controls.userName.invalid) {
+        <p class="error">Enter a name of 40 characters or fewer.</p>
+      }
+    </div>
+
+    <div class="question">
+      <label for="assistant-name">Give your AI a name</label>
+      <p class="helper" id="assistant-name-help">It will introduce itself with this name every session.</p>
+      <input id="assistant-name" type="text" formControlName="assistantName" maxlength="30" aria-describedby="assistant-name-help assistant-name-error" />
+      @if (form.controls.assistantName.touched && form.controls.assistantName.invalid) {
+        <p class="error" id="assistant-name-error">Use 1–30 letters, numbers, spaces, hyphens, or apostrophes.</p>
+      }
+    </div>
+
+    <fieldset class="question">
+      <legend>How comfortable are you with this kind of work?</legend>
+      <p class="helper">So your AI explains things at the right level.</p>
+      <div class="option-list">
+        <label><input type="radio" formControlName="experience" value="new" /> New to this</label>
+        <label><input type="radio" formControlName="experience" value="some" /> Some experience</label>
+        <label><input type="radio" formControlName="experience" value="experienced" /> Very experienced</label>
+      </div>
+    </fieldset>
+
+    <fieldset class="question" formGroupName="tools">
+      <legend>Which AI tools will you use?</legend>
+      <p class="helper">We'll include the right setup files. Not sure? Keep Claude Code.</p>
+      <div class="option-list">
+        <label><input type="checkbox" formControlName="claude-code" /> Claude Code</label>
+        <label><input type="checkbox" formControlName="cursor" /> Cursor</label>
+        <label><input type="checkbox" formControlName="other" /> Something else</label>
+      </div>
+      @if (!answers().tools.length) {
+        <p class="error">Choose at least one AI tool.</p>
+      }
+    </fieldset>
+  </section>
+
+  <section class="page-section" aria-labelledby="project-heading">
+    <p class="eyebrow">3 · Your project</p>
+    <h2 id="project-heading">Tell us the essentials</h2>
+
+    <div class="question">
+      <label for="project-name">Project name</label>
+      <p class="helper" id="project-name-help">A short name, e.g. “Sleep research” or “Recipe app”.</p>
+      <input id="project-name" type="text" formControlName="projectName" maxlength="60" aria-describedby="project-name-help" />
+      @if (form.controls.projectName.touched && form.controls.projectName.invalid) {
+        <p class="error">Enter a project name of 60 characters or fewer.</p>
+      }
+    </div>
+
+    <div class="question">
+      <label for="goal">{{ form.controls.track.value === 'research' ? 'What do you want to understand?' : 'What do you want to build?' }}</label>
+      <p class="helper" id="goal-help">One or two sentences is plenty.</p>
+      <textarea id="goal" formControlName="goal" maxlength="400" rows="4" aria-describedby="goal-help"></textarea>
+      @if (form.controls.goal.touched && form.controls.goal.invalid) {
+        <p class="error">Describe your goal in 400 characters or fewer.</p>
+      }
+    </div>
+
+    <div class="question">
+      <label for="deadline">Any deadline?</label>
+      <p class="helper" id="deadline-help">Optional. Your AI will remind you as it gets close.</p>
+      <input id="deadline" type="date" formControlName="deadline" aria-describedby="deadline-help" />
+    </div>
+  </section>
+
+  @if (form.controls.track.value === 'research') {
+    <section class="page-section" formGroupName="research" aria-labelledby="research-heading">
+      <p class="eyebrow">4 · Research details</p>
+      <h2 id="research-heading">Shape your research partner</h2>
+
+      <fieldset class="question">
+        <legend>What's this research for?</legend>
+        <p class="helper">Changes how formal your AI is with sources.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="researchPurpose" value="learning" /> Personal learning</label>
+          <label><input type="radio" formControlName="researchPurpose" value="school" /> School or coursework</label>
+          <label><input type="radio" formControlName="researchPurpose" value="work" /> A work project</label>
+          <label><input type="radio" formControlName="researchPurpose" value="academic" /> Academic paper or thesis</label>
+          <label><input type="radio" formControlName="researchPurpose" value="other" /> Other</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>What does a good answer look like to you?</legend>
+        <p class="helper">You can always ask for more or less detail.</p>
+        <div class="option-list">
+          <label><input type="radio" formControlName="answerStyle" value="quick" /> Quick, plain-language summaries</label>
+          <label><input type="radio" formControlName="answerStyle" value="detailed" /> Detailed explanations with examples and citations</label>
+          <label><input type="radio" formControlName="answerStyle" value="expert" /> Expert-level depth with full citations and caveats</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question" formGroupName="sourceTypes">
+        <legend>What kinds of sources will you add?</legend>
+        <p class="helper">Tick all that apply.</p>
+        <div class="option-list compact-options">
+          <label><input type="checkbox" formControlName="papers" /> Papers/PDFs</label>
+          <label><input type="checkbox" formControlName="web-articles" /> Web articles</label>
+          <label><input type="checkbox" formControlName="books-notes" /> Books &amp; notes</label>
+          <label><input type="checkbox" formControlName="datasets" /> Datasets</label>
+          <label><input type="checkbox" formControlName="code-repositories" /> Code repositories</label>
+          <label><input type="checkbox" formControlName="images" /> Images</label>
+          <label><input type="checkbox" formControlName="videos-transcripts" /> Videos/transcripts</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question" formGroupName="outputs">
+        <legend>How do you want bigger answers delivered?</legend>
+        <p class="helper">Short answers always come in the chat.</p>
+        <div class="option-list compact-options">
+          <label><input type="checkbox" formControlName="reports" /> Written reports</label>
+          <label><input type="checkbox" formControlName="slides" /> Slide decks</label>
+          <label><input type="checkbox" formControlName="charts" /> Charts</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>Can your AI look things up online to fill gaps?</legend>
+        <p class="helper">Online facts are always labelled with their link.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="webAccess" value="yes" /> Yes</label>
+          <label><input type="radio" formControlName="webAccess" value="ask" /> Ask me first</label>
+          <label><input type="radio" formControlName="webAccess" value="no" /> Only use my sources</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>Browse your knowledge base in Obsidian?</legend>
+        <p class="helper">A free notes app that shows the links between pages. Recommended.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="usesObsidian" value="yes" /> Yes</label>
+          <label><input type="radio" formControlName="usesObsidian" value="no" /> No</label>
+        </div>
+      </fieldset>
+    </section>
+  }
+
+  @if (form.controls.track.value === 'app') {
+    <section class="page-section" formGroupName="app" aria-labelledby="app-heading">
+      <p class="eyebrow">4 · App details</p>
+      <h2 id="app-heading">Shape your build partner</h2>
+
+      <fieldset class="question">
+        <legend>New project or existing code?</legend>
+        <p class="helper">Existing code: your AI reads it first.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="projectStatus" value="new" /> New project</label>
+          <label><input type="radio" formControlName="projectStatus" value="existing" /> Existing code</label>
+        </div>
+      </fieldset>
+
+      <div class="question">
+        <label for="audience">Who will use it?</label>
+        <p class="helper" id="audience-help">e.g. “just me”, “my team”, “customers of my bakery”.</p>
+        <input id="audience" type="text" formControlName="audience" maxlength="150" aria-describedby="audience-help" />
+      </div>
+
+      <fieldset class="question">
+        <legend>Where should it run?</legend>
+        <p class="helper">Not sure is fine. Your AI will recommend one.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="platform" value="website" /> Website</label>
+          <label><input type="radio" formControlName="platform" value="phone" /> Phone app</label>
+          <label><input type="radio" formControlName="platform" value="desktop" /> Desktop app</label>
+          <label><input type="radio" formControlName="platform" value="unsure" /> Not sure</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question">
+        <legend>Who will be able to use it when it's done?</legend>
+        <p class="helper">Affects hosting and security.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="launchTarget" value="me" /> Just me</label>
+          <label><input type="radio" formControlName="launchTarget" value="few" /> A few people I share it with</label>
+          <label><input type="radio" formControlName="launchTarget" value="public" /> Anyone (public)</label>
+          <label><input type="radio" formControlName="launchTarget" value="unsure" /> Not sure</label>
+        </div>
+      </fieldset>
+
+      <fieldset class="question requirement-grid">
+        <legend>Project requirements</legend>
+        <p class="helper">Not sure is fine. Your AI will ask before building anything that depends on it.</p>
+        <div class="requirement-row">
+          <span>Will people need to sign in?<small>Accounts need extra care to keep safe.</small></span>
+          <label><input type="radio" formControlName="needsAccounts" value="yes" /> Yes</label>
+          <label><input type="radio" formControlName="needsAccounts" value="no" /> No</label>
+          <label><input type="radio" formControlName="needsAccounts" value="unsure" /> Not sure</label>
+        </div>
+        <div class="requirement-row">
+          <span>Will it save information?<small>Saved data needs a database.</small></span>
+          <label><input type="radio" formControlName="storesData" value="yes" /> Yes</label>
+          <label><input type="radio" formControlName="storesData" value="no" /> No</label>
+          <label><input type="radio" formControlName="storesData" value="unsure" /> Not sure</label>
+        </div>
+        <div class="requirement-row">
+          <span>Will it handle personal or sensitive info?<small>Names, emails, health, or money need extra privacy care.</small></span>
+          <label><input type="radio" formControlName="personalData" value="yes" /> Yes</label>
+          <label><input type="radio" formControlName="personalData" value="no" /> No</label>
+          <label><input type="radio" formControlName="personalData" value="unsure" /> Not sure</label>
+        </div>
+        <div class="requirement-row">
+          <span>Will it take payments?<small>Payments always go through a trusted provider.</small></span>
+          <label><input type="radio" formControlName="payments" value="yes" /> Yes</label>
+          <label><input type="radio" formControlName="payments" value="no" /> No</label>
+          <label><input type="radio" formControlName="payments" value="unsure" /> Not sure</label>
+        </div>
+      </fieldset>
+
+      <div class="question">
+        <label for="external-services">Will it connect to other services?</label>
+        <p class="helper" id="external-services-help">e.g. Google Sheets, maps, email, an AI model. Leave blank if none or unsure.</p>
+        <input id="external-services" type="text" formControlName="externalServices" maxlength="200" aria-describedby="external-services-help" />
+      </div>
+
+      <fieldset class="question">
+        <legend>Monthly budget for hosting and services?</legend>
+        <p class="helper">Your AI will stay within this and warn you before any cost.</p>
+        <div class="option-list compact-options">
+          <label><input type="radio" formControlName="budget" value="free" /> Free only</label>
+          <label><input type="radio" formControlName="budget" value="low" /> Up to about $20/month</label>
+          <label><input type="radio" formControlName="budget" value="flexible" /> More is fine</label>
+          <label><input type="radio" formControlName="budget" value="unsure" /> Not sure</label>
+        </div>
+      </fieldset>
+
+      <div class="question">
+        <label for="tech-stack">Any technologies you want to use?</label>
+        <p class="helper" id="tech-stack-help">Leave blank if unsure. Your AI will suggest a beginner-friendly option.</p>
+        <input id="tech-stack" type="text" formControlName="techStack" maxlength="200" aria-describedby="tech-stack-help" />
+      </div>
+    </section>
+  }
+</form>
