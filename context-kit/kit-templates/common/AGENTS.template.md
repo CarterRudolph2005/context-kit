@@ -63,7 +63,7 @@ Saving begins when {{userName}} says "save", "wrap up" or "checkpoint", runs `/s
   - Each session: tell me what you want to do. I'll work on it and save important things as we go.
   - Before you close, say **"save"** (or type `/save`) so I record exactly where we left off.
   - Next time, just say hi. I'll recap and suggest the next step.
-  - {{welcomeTrackLines}}
+{{welcomeTrackLines}}
   - You can rename me any time.
 - **S3 A few questions.** Ask the open-ended questions for this track one at a time, at most 6. Skip anything the files already answer. If {{userName}} says "skip" or "later", move on and add the question to **Open questions**.
   - Research: ask what they already know; what is in and out of scope; which questions they hope to answer (record these under **Questions to explore** in `wiki/index.md`); whether they have trusted or distrusted sources; and anything to avoid.

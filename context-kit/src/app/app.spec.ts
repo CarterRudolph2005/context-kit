@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { App } from './app';
+import { KitPreview } from './kit-preview/kit-preview';
 import { Survey } from './survey/survey';
 
 describe('App', () => {
@@ -45,6 +46,31 @@ describe('App', () => {
     survey.form.patchValue({ userName: 'Rae', assistantName: 'Nova' });
     fixture.detectChanges();
 
-    expect((fixture.nativeElement as HTMLElement).querySelector('#preview-heading')?.textContent).toContain('Meet Nova');
+    expect(
+      (fixture.nativeElement as HTMLElement).querySelector('#preview-heading')?.textContent,
+    ).toContain('Meet Nova');
+  });
+
+  it('previews the expected files for valid research answers', async () => {
+    const fixture = TestBed.createComponent(App);
+    fixture.detectChanges();
+    const survey = fixture.debugElement.query(By.directive(Survey)).componentInstance as Survey;
+
+    survey.form.patchValue({
+      track: 'research',
+      userName: 'Rae',
+      assistantName: 'Nova',
+      projectName: 'Sleep research',
+      goal: 'Understand how sleep habits affect concentration.',
+    });
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const preview = fixture.debugElement.query(By.directive(KitPreview))
+      .componentInstance as KitPreview;
+    const paths = preview.files().map((file) => file.path);
+    expect(paths).toContain('START-HERE.md');
+    expect(paths).toContain('wiki/index.md');
   });
 });

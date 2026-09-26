@@ -21,11 +21,11 @@ export class TemplateCompiler {
     values.trackRules = renderTemplate(
       this.template(templates, `${track}/AGENTS.track.md`),
       values,
-    );
+    ).trimEnd();
     values.trackStartHere = renderTemplate(
       this.template(templates, `${track}/START-HERE.track.md`),
       values,
-    );
+    ).trimEnd();
 
     return KIT_MANIFEST.filter((entry) => entry.include(normalized))
       .map((entry) => ({
@@ -203,14 +203,14 @@ export class TemplateCompiler {
   private welcomeLines(track: KitAnswers['track']): string {
     return track === 'research'
       ? [
-          '- Drop sources (PDFs, clipped articles, datasets, images) into `raw/`, then say "ingest". I\'ll turn them into a linked wiki.',
-          "- Ask me anything, and I'll answer from your sources with citations.",
-          '- Say "health check" now and then, and I\'ll tidy the wiki and suggest new questions.',
+          '  - Drop sources (PDFs, clipped articles, datasets, images) into `raw/`, then say "ingest". I\'ll turn them into a linked wiki.',
+          "  - Ask me anything, and I'll answer from your sources with citations.",
+          '  - Say "health check" now and then, and I\'ll tidy the wiki and suggest new questions.',
         ].join('\n')
       : [
-          '- Say "plan <idea>" and I\'ll describe the feature in plain words before building it.',
-          '- After I build something, I\'ll give you simple steps to check it yourself. Say "check" any time.',
-          '- I\'ll ask before anything risky or costly, and I keep an undo history, so you can say "undo that".',
+          '  - Say "plan <idea>" and I\'ll describe the feature in plain words before building it.',
+          '  - After I build something, I\'ll give you simple steps to check it yourself. Say "check" any time.',
+          '  - I\'ll ask before anything risky or costly, and I keep an undo history, so you can say "undo that".',
         ].join('\n');
   }
 

@@ -737,83 +737,83 @@ The order follows the owner's request: **kit files → scripts that turn UI answ
 
 These files *are* the product. Write them carefully, in plain, warm language, following §3 exactly.
 
-- [ ] `common/AGENTS.template.md` (it outputs as `AGENTS.md`): the structure from §3.2, containing P1–P6, M1–M15, S1–S4, and the phrases table.
-- [ ] `common/CLAUDE.template.md` (it outputs as `CLAUDE.md`), `common/START-HERE.md`, and `common/context/state.md`, `decisions.md` and `log.md`.
-- [ ] `common/commands/save.md` and `setup.md`.
-- [ ] `research/AGENTS.track.md` (profile + R1–R21) and `research/START-HERE.track.md`.
-- [ ] `research/raw/README.md`, `wiki/index.md` and `outputs/README.md`.
+- [x] `common/AGENTS.template.md` (it outputs as `AGENTS.md`): the structure from §3.2, containing P1–P6, M1–M15, S1–S4, and the phrases table.
+- [x] `common/CLAUDE.template.md` (it outputs as `CLAUDE.md`), `common/START-HERE.md`, and `common/context/state.md`, `decisions.md` and `log.md`.
+- [x] `common/commands/save.md` and `setup.md`.
+- [x] `research/AGENTS.track.md` (profile + R1–R21) and `research/START-HERE.track.md`.
+- [x] `research/raw/README.md`, `wiki/index.md` and `outputs/README.md`.
   - `wiki/index.md` has four sections: an empty Sources table, Concepts, Questions to explore, and Could not read.
-- [ ] `research/commands/ingest.md`, `ask.md` and `lint.md`.
-- [ ] `app/AGENTS.track.md` (profile + A1–A16) and `app/START-HERE.track.md`.
-- [ ] The four `app/context/knowledge/*.md` files, plus `app/commands/plan.md` and `check.md`.
-- [ ] Self-check:
-  - [ ] the contract test passes
-  - [ ] every rule ID is present exactly once where it's defined
-  - [ ] every cross-reference points to a rule that exists
-  - [ ] `START-HERE` has no jargon
-  - [ ] estimated rendered lengths are within the limits in §5
-- [ ] Commit: `Phase 1: kit templates`.
+- [x] `research/commands/ingest.md`, `ask.md` and `lint.md`.
+- [x] `app/AGENTS.track.md` (profile + A1–A16) and `app/START-HERE.track.md`.
+- [x] The four `app/context/knowledge/*.md` files, plus `app/commands/plan.md` and `check.md`.
+- [x] Self-check:
+  - [x] the contract test passes
+  - [x] every rule ID is present exactly once where it's defined
+  - [x] every cross-reference points to a rule that exists
+  - [x] `START-HERE` has no jargon
+  - [x] estimated rendered lengths are within the limits in §5
+- [x] Commit: `Phase 1: kit templates`.
 
 ### Phase 2 — Generation Engine (Stream B)
 
 **Owns:** `src/app/kit/render-template.ts`, `src/app/kit/kit-manifest.ts`, `src/app/core/services/**`, and their specs.
 
-- [ ] `renderTemplate`, with tests:
+- [x] `renderTemplate`, with tests:
   - replaces values
   - throws on a missing key
   - keeps `$&`, `$1` and `{{x}}` inside values literal
   - leaves `[[link]]` untouched
-- [ ] `kit-manifest.ts`, following the manifest rules in §4.4.
-- [ ] `TemplateCompiler.compile`: builds every placeholder value (§3.5, §3.6, §3.9, §3.10, §4.2).
-- [ ] **Fixture tests.** Build a fixture template map in the spec that has every manifest `templateId` and uses every placeholder. Test that:
-  - [ ] the path lists are correct for all 8 track × tool combinations
-  - [ ] `CLAUDE.md` appears only when Claude Code is selected
-  - [ ] `$ARGUMENTS` appears only under `.claude/`
-  - [ ] `plan`/`check` appear only in app kits, and `ingest`/`ask`/`lint` only in research kits
-  - [ ] the `requirementsList` and `openQuestions` mappings are right
-  - [ ] the `webAccessRule` mapping is right
-  - [ ] names are substituted inside `experienceTone` and `webAccessRule`
-- [ ] **Real-template tests**, guarded with `it.skipIf(Object.keys(TEMPLATES).length === 0)`. For all 8 combinations, with both default and filled-in answers:
-  - [ ] no `{{` remains
-  - [ ] the size limits in §5 hold
-  - [ ] `state.md` contains `Setup: INCOMPLETE`, the goal and both names
-  - [ ] `AGENTS.md` contains the assistant's name in its title
-- [ ] `ZipGenerator`, with a test that builds a zip, reloads it with `JSZip.loadAsync`, and checks that:
+- [x] `kit-manifest.ts`, following the manifest rules in §4.4.
+- [x] `TemplateCompiler.compile`: builds every placeholder value (§3.5, §3.6, §3.9, §3.10, §4.2).
+- [x] **Fixture tests.** Build a fixture template map in the spec that has every manifest `templateId` and uses every placeholder. Test that:
+  - [x] the path lists are correct for all 8 track × tool combinations
+  - [x] `CLAUDE.md` appears only when Claude Code is selected
+  - [x] `$ARGUMENTS` appears only under `.claude/`
+  - [x] `plan`/`check` appear only in app kits, and `ingest`/`ask`/`lint` only in research kits
+  - [x] the `requirementsList` and `openQuestions` mappings are right
+  - [x] the `webAccessRule` mapping is right
+  - [x] names are substituted inside `experienceTone` and `webAccessRule`
+- [x] **Real-template tests**, guarded with `it.skipIf(Object.keys(TEMPLATES).length === 0)`. For all 8 combinations, with both default and filled-in answers:
+  - [x] no `{{` remains
+  - [x] the size limits in §5 hold
+  - [x] `state.md` contains `Setup: INCOMPLETE`, the goal and both names
+  - [x] `AGENTS.md` contains the assistant's name in its title
+- [x] `ZipGenerator`, with a test that builds a zip, reloads it with `JSZip.loadAsync`, and checks that:
   - every path starts with `<slug>/`
   - the contents round-trip
 
   Stub `saveAs`.
-- [ ] Commit: `Phase 2: generation engine`.
+- [x] Commit: `Phase 2: generation engine`.
 
 ### Phase 3 — User Interface (Stream C)
 
 **Owns:** `src/app/survey/**`, `src/app/kit-preview/**`, `src/app/app.*`, `src/styles.css`.
 
-- [ ] `survey` component:
+- [x] `survey` component:
   - a reactive form covering every field in §4.1, with labels, helpers, defaults and validation
   - track-specific controls are enabled only for the chosen track
   - it exposes `answers` (a signal of `KitAnswers`) and `valid` (a signal of boolean)
-- [ ] `kit-preview` component:
+- [x] `kit-preview` component:
   - input: `files: KitFile[]`
   - output: a file tree grouped by folder, plus the selected file's content
-- [ ] `App`: header → survey → preview (fed by `TemplateCompiler.compile`) → download area → What next. Include the personal touches and the invalid-form message from §4.3.
-- [ ] Styling and accessibility, per §4.3.
-- [ ] Component tests, using hand-made `KitFile[]` for the preview:
-  - [ ] the download button is disabled on an empty form
-  - [ ] choosing Research shows the research fields and hides the app ones, and vice versa
-  - [ ] the invalid-form message lists the missing fields
-  - [ ] the preview shows the tree and switches content on click
-  - [ ] "Meet {{assistantName}}" appears once both names are entered
-- [ ] Commit: `Phase 3: user interface`.
+- [x] `App`: header → survey → preview (fed by `TemplateCompiler.compile`) → download area → What next. Include the personal touches and the invalid-form message from §4.3.
+- [x] Styling and accessibility, per §4.3.
+- [x] Component tests, using hand-made `KitFile[]` for the preview:
+  - [x] the download button is disabled on an empty form
+  - [x] choosing Research shows the research fields and hides the app ones, and vice versa
+  - [x] the invalid-form message lists the missing fields
+  - [x] the preview shows the tree and switches content on click
+  - [x] "Meet {{assistantName}}" appears once both names are entered
+- [x] Commit: `Phase 3: user interface`.
 
 ### Phase 4 — Integration & Verification (Lead Agent)
 
-- [ ] **Parallel mode only:** merge the three stream branches (§7.1), run `npm install`, and copy the streams' notes into §10.
-- [ ] Confirm the real-template tests from Phase 2 now run and pass.
-- [ ] Add an App-level test: fill in the form with valid research answers, and check that the preview lists `START-HERE.md` and `wiki/index.md`.
-- [ ] Write `src/app/kit/samples.spec.ts`. When `process.env['WRITE_SAMPLES'] === '1'`, it writes two unzipped kits into `samples/research-demo/` and `samples/app-demo/` (relative to `process.cwd()`, which is `context-kit/`). Use `node:fs` with fixed filled-in answers, all tools, and `today = 2026-01-01`. Otherwise the test just passes.
+- [x] **Parallel mode only:** merge the three stream branches (§7.1), run `npm install`, and copy the streams' notes into §10.
+- [x] Confirm the real-template tests from Phase 2 now run and pass.
+- [x] Add an App-level test: fill in the form with valid research answers, and check that the preview lists `START-HERE.md` and `wiki/index.md`.
+- [x] Write `src/app/kit/samples.spec.ts`. When `process.env['WRITE_SAMPLES'] === '1'`, it writes two unzipped kits into `samples/research-demo/` and `samples/app-demo/` (relative to `process.cwd()`, which is `context-kit/`). Use `node:fs` with fixed filled-in answers, all tools, and `today = 2026-01-01`. Otherwise the test just passes.
   - Run `WRITE_SAMPLES=1 npm test -- --watch=false`.
-- [ ] **Read both samples end to end, as the receiving AI would.** Look for:
+- [x] **Read both samples end to end, as the receiving AI would.** Look for:
   - contradictions
   - references to files that don't exist or are never created
   - references to rule IDs that don't exist
@@ -821,13 +821,13 @@ These files *are* the product. Write them carefully, in plain, warm language, fo
   - an unclear first session
 
   Fix the templates and regenerate.
-- [ ] Run `npm run build`: no budget errors, and `dist/context-kit/browser/index.html` exists.
-- [ ] Serve the app with `npm start` in the background, confirm `http://localhost:4200` returns the page, then stop the server.
-- [ ] Add the Vercel settings to the README:
+- [x] Run `npm run build`: no budget errors, and `dist/context-kit/browser/index.html` exists.
+- [x] Serve the app with `npm start` in the background, confirm `http://localhost:4200` returns the page, then stop the server.
+- [x] Add the Vercel settings to the README:
   - Framework: Angular
   - Build: `npm run build`
   - Output: `dist/context-kit/browser`
-- [ ] Commit: `Phase 4: integration, samples and verification`.
+- [x] Commit: `Phase 4: integration, samples and verification`.
 
 ---
 
@@ -909,3 +909,8 @@ Run Phase 0 → 1 → 2 → 3 → 4 in order on `main`. Skip the merge step in P
 
 - Phase 0: Sequential mode selected.
 - Phase 0: `KitAnswers.today` is an optional fixture override; normal browser generation still uses the local date.
+- Phase 1: All kit templates and 62 rule definitions were verified; no implementation exceptions.
+- Phase 2: Fixture coverage was used in isolation; all guarded real-template cases ran after the Phase 1 merge.
+- Phase 3: UI styles are centralized in `src/styles.css` to stay below the per-component style budget.
+- Phase 3: The temporary valid-preview empty state supported the Phase 0 compiler stub; merged builds render real files.
+- Phase 4: Sample review fixed malformed indentation in the rendered first-session track overview.

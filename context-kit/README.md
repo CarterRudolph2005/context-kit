@@ -28,3 +28,11 @@ npm run build
 
 The Markdown content included in generated kits lives in `kit-templates/`. The pre-start,
 pre-test, and pre-build scripts compile those files into a TypeScript module used by the app.
+
+## Deploying to Vercel
+
+Use these project settings:
+
+- Framework: Angular
+- Build: `npm run build`
+- Output: `dist/context-kit/browser`
